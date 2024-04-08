@@ -46,17 +46,23 @@ void _init() {
 
       print("init pdfrx");
 
-      try {
-        DynamicLibrary dlib = DynamicLibrary.open(_getModuleFileName());
+      pdfium =
+          pdfium_bindings.pdfium(DynamicLibrary.process());
 
-        pdfium =
-            pdfium_bindings.pdfium(dlib);
-      }
-      catch (err, stackTrace) {
-        print("error $err");
-        pdfium =
-            pdfium_bindings.pdfium(DynamicLibrary.process());
-      }
+      // try {
+      //   DynamicLibrary dlib = DynamicLibrary.open(_getModuleFileName());
+      //   print("dlib $dlib");
+      //
+      //   pdfium =
+      //       pdfium_bindings.pdfium(dlib);
+      // }
+      // catch (err) {
+      //   print("error $err");
+      //   pdfium =
+      //       pdfium_bindings.pdfium(DynamicLibrary.process());
+      //
+      //   print("error $err");
+      // }
 
       pdfium.FPDF_InitLibraryWithConfig(config);
     },
