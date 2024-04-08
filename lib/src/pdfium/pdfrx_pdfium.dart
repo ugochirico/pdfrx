@@ -44,18 +44,20 @@ void _init() {
       config.ref.m_pIsolate = nullptr;
       config.ref.m_v8EmbedderSlot = 0;
 
-      print("ibit pdfrx");
+      print("init pdfrx");
 
       try {
+        DynamicLibrary dlib = DynamicLibrary.open(_getModuleFileName());
+
         pdfium =
-            pdfium_bindings.pdfium(DynamicLibrary.open(_getModuleFileName()));
+            pdfium_bindings.pdfium(dlib);
       }
       catch (err, stackTrace) {
         print("error $err");
         pdfium =
             pdfium_bindings.pdfium(DynamicLibrary.process());
       }
-      
+
       pdfium.FPDF_InitLibraryWithConfig(config);
     },
   );
