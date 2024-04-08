@@ -28,8 +28,7 @@ String _getModuleFileName() {
 }
 
 /// Loaded pdfium module.
-final pdfium =
-    pdfium_bindings.pdfium(DynamicLibrary.open(_getModuleFileName()));
+var pdfium;
 
 bool _initialized = false;
 
@@ -44,6 +43,19 @@ void _init() {
       config.ref.m_pUserFontPaths = nullptr;
       config.ref.m_pIsolate = nullptr;
       config.ref.m_v8EmbedderSlot = 0;
+
+      print("ibit pdfrx");
+
+      try {
+        pdfium =
+            pdfium_bindings.pdfium(DynamicLibrary.open(_getModuleFileName()));
+      }
+      catch (err, stackTrace) {
+        print("error $err");
+        pdfium =
+            pdfium_bindings.pdfium(DynamicLibrary.process());
+      }
+      
       pdfium.FPDF_InitLibraryWithConfig(config);
     },
   );
